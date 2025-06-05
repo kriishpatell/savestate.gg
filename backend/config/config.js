@@ -3,7 +3,7 @@ dotenv.config();
 
 export default {
   port: process.env.PORT,
-  twitchClientId: process.env.CLIENT_ID,
-  twitchAccessToken: process.env.CLIENT_SECRET,
+  twitchClientId: process.env.TWITCH_CLIENT_ID,
+  twitchAccessToken: process.env.TWITCH_CLIENT_SECRET,
   mongoURI: process.env.MONGO_URI
 };
