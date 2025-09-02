@@ -1,15 +1,32 @@
 {
-  "name": "consologue",
+  "name": "savestate.gg",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
-    "start": "node backend/server.js",
-    "server": "npx nodemon backend/server.js",
-    "client": "npm run serve --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "install:all": "npm install",
+    "dev": "concurrently -n web,api -c blue,magenta \"npm run dev --workspace=frontend\" \"npm run start:dev --workspace=backend\"",
+    "build": "npm run build --workspaces",
+    "lint": "npm run lint --workspaces"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kriishpatell/savestate.gg.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/kriishpatell/savestate.gg/issues"
+  },
+  "homepage": "https://github.com/kriishpatell/savestate.gg#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
 }
