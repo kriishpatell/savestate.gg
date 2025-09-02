@@ -1,32 +1,15 @@
-{
+﻿{
   "name": "savestate.gg",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "private": true,
-  "workspaces": [
-    "frontend",
-    "backend"
-  ],
+  "workspaces": ["frontend", "backend"],
   "scripts": {
-    "install:all": "npm install",
-    "dev": "concurrently -n web,api -c blue,magenta \"npm run dev --workspace=frontend\" \"npm run start:dev --workspace=backend\"",
+    "install:all": "npm install --prefer-dedupe",
+    "dev": "concurrently -n web,api -c blue,magenta \"npm run dev -w frontend\" \"npm run dev -w backend\"",
     "build": "npm run build --workspaces",
-    "lint": "npm run lint --workspaces"
+    "lint": "npm run lint --workspaces",
+    "dedupe": "npm dedupe"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kriishpatell/savestate.gg.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/kriishpatell/savestate.gg/issues"
-  },
-  "homepage": "https://github.com/kriishpatell/savestate.gg#readme",
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^8.2.0"
   }
 }
