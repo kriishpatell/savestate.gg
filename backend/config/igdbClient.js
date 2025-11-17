@@ -26,29 +26,40 @@ async function refreshToken() {
   }
 }
 
-export async function searchGames(query) {
+async function igdbRequest(body) {
   if (!accessToken || Date.now() >= tokenExpiry) {
     await refreshToken();
   }
 
   try {
-    const response = await axios.post(
-      'https://api.igdb.com/v4/games',
-      `fields id, name, cover.url, genres.name, first_release_date, summary; search "${query}"; limit 10;`,
-      {
-        headers: {
-          'Client-ID': process.env.TWITCH_CLIENT_ID,
-          'Authorization': `Bearer ${accessToken}`,
-          'Accept': 'application/json'
-        }
+    const response = await axios.post('https://api.igdb.com/v4/games', body, {
+      headers: {
+        'Client-ID': process.env.TWITCH_CLIENT_ID,
+        Authorization: `Bearer ${accessToken}`,
+        Accept: 'application/json'
       }
-    );
+    });
     return response.data;
   } catch (error) {
     if (error.response?.status === 401) {
       await refreshToken();
-      return searchGames(query);
+      return igdbRequest(body);
     }
     throw new Error('Failed to fetch from IGDB: ' + error.message);
   }
+}
+
+export async function searchGames(query) {
+  const body = `fields id, name, cover.url, genres.name, first_release_date, summary;
+                search "${query}";
+                limit 10;`;
+  return igdbRequest(body);
+}
+
+export async function getGameDLC(gameId) {
+  const body = `fields id, name, cover.url, first_release_date, summary, platforms.name;
+                where parent_game = ${Number(gameId)};
+                sort first_release_date desc;
+                limit 20;`;
+  return igdbRequest(body);
 }
